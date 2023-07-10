@@ -68,7 +68,9 @@ class BERTTrainer:
         # Using Negative Log Likelihood Loss function for predicting the masked_token
         self.criterion = nn.NLLLoss(ignore_index=0)
         self.time_criterion = nn.MSELoss()
-        self.hyper_criterion = nn.MSELoss()
+        # TODO loss
+        # self.hyper_criterion = nn.MSELoss()  # original
+        self.hyper_criterion = nn.L1Loss()
 
         # deep SVDD hyperparameters
         self.hypersphere_loss = hypersphere_loss
@@ -167,7 +169,16 @@ class BERTTrainer:
                 total_hyper_loss += hyper_loss.item()
 
                 # with deepsvdd loss
-                loss = loss + 0.1 * hyper_loss
+                # TODO 损失中的超参数 alpha
+                # loss = loss + 0.1 * hyper_loss  # original
+                # loss = loss + 0.01 * hyper_loss
+                loss = loss + 0.001 * hyper_loss
+                # loss = loss + 0.5 * hyper_loss
+                # loss = loss + 1.0 * hyper_loss
+                # loss = loss + 10 * hyper_loss
+                # loss = loss + 100 * hyper_loss
+                # loss = loss + 1000 * hyper_loss
+                # loss = loss + 0.0001 * hyper_loss
 
             total_loss += loss.item()
 

@@ -14,6 +14,9 @@ from bert_pytorch.dataset import WordVocab
 from bert_pytorch import Predictor, Trainer
 from bert_pytorch.dataset.utils import seed_everything
 
+import warnings
+warnings.filterwarnings('ignore')
+
 options = dict()
 options['device'] = 'cuda' if torch.cuda.is_available() else 'cpu'
 options["output_dir"] = "../output/hdfs/"
@@ -27,7 +30,21 @@ options["adaptive_window"] = True
 options["seq_len"] = 512
 options["max_len"] = 512 # for position embedding
 options["min_len"] = 10
-options["mask_ratio"] = 0.65
+
+# TODO mask_ratio_hdfs
+options["mask_ratio"] = 0.65  # original
+# options["mask_ratio"] = 0.1
+# options["mask_ratio"] = 0.2
+# options["mask_ratio"] = 0.3
+# options["mask_ratio"] = 0.5
+# options["mask_ratio"] = 0.7
+# options["mask_ratio"] = 0.9
+# options["mask_ratio"] = 0.6
+# options["mask_ratio"] = 0.4
+# options["mask_ratio"] = 0.45
+# options["mask_ratio"] = 0.55
+# options["mask_ratio"] = 0.65
+
 # sample ratio
 options["train_ratio"] = 1
 options["valid_ratio"] = 0.1
@@ -45,7 +62,12 @@ options["scale_path"] = options["model_dir"] + "scale.pkl"
 
 # model
 options["hidden"] = 256 # embedding size
-options["layers"] = 4
+# TODO num_layers_hdfs
+options["layers"] = 4  # original
+# options["layers"] = 2
+# options["layers"] = 5
+# options["layers"] = 3
+# options["layers"] = 6
 options["attn_heads"] = 4
 
 options["epochs"] = 200
@@ -54,7 +76,10 @@ options["batch_size"] = 32
 
 options["corpus_lines"] = None
 options["on_memory"] = True
-options["num_workers"] = 5
+
+# TODO num_workers_hdfs
+options["num_workers"] = 5  # original
+# options["num_workers"] = 0
 options["lr"] = 1e-3
 options["adam_beta1"] = 0.9
 options["adam_beta2"] = 0.999
@@ -64,7 +89,16 @@ options["cuda_devices"] = None
 options["log_freq"] = None
 
 # predict
-options["num_candidates"] = 6
+# TODO num_candidates_hdfs
+options["num_candidates"] = 6  # original
+# options["num_candidates"] = 3
+# options["num_candidates"] = 4
+# options["num_candidates"] = 5
+# options["num_candidates"] = 6
+# options["num_candidates"] = 7
+# options["num_candidates"] = 8
+# options["num_candidates"] = 9
+# options["num_candidates"] = 10
 options["gaussian_mean"] = 0
 options["gaussian_std"] = 1
 
