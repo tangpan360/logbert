@@ -3,6 +3,8 @@ import torch
 
 from .transformer import TransformerBlock
 from .embedding import BERTEmbedding
+from .embedding.token import TokenEmbedding
+from .embedding.position import PositionalEmbedding
 
 class BERT(nn.Module):
     """
@@ -29,6 +31,9 @@ class BERT(nn.Module):
         # embedding for BERT, sum of positional, segment, token embeddings
         self.embedding = BERTEmbedding(vocab_size=vocab_size, embed_size=hidden, max_len=max_len, is_logkey=is_logkey, is_time=is_time)
 
+        self.token = TokenEmbedding(vocab_size=vocab_size, embed_size=hidden)
+        self.position = PositionalEmbedding(d_model=self.token.embedding_dim, max_len=max_len)
+
         # multi-layers transformer blocks, deep network
         self.transformer_blocks = nn.ModuleList(
             [TransformerBlock(hidden, attn_heads, hidden * 2, dropout) for _ in range(n_layers)])
@@ -39,11 +44,15 @@ class BERT(nn.Module):
         # torch.ByteTensor([batch_size, 1, seq_len, seq_len)
         mask = (x > 0).unsqueeze(1).repeat(1, x.size(1), 1).unsqueeze(1)
 
+        batch_size = x.size(0)
         # embedding the indexed sequence to sequence of vectors
+        # x = self.embedding(x, segment_info, time_info)
+        pos_embed = self.position(x)
+        pos_embed = pos_embed.repeat(batch_size, 1, 1)
         x = self.embedding(x, segment_info, time_info)
 
         # running over multiple transformer blocks
         for transformer in self.transformer_blocks:
-            x = transformer.forward(x, mask)
+            x = transformer.forward(x, pos_embed, mask)
 
         return x

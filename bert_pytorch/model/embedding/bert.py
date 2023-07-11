@@ -32,9 +32,10 @@ class BERTEmbedding(nn.Module):
         self.is_time = is_time
 
     def forward(self, sequence, segment_label=None, time_info=None):
-        x = self.position(sequence)
+        # x = self.position(sequence)
         # if self.is_logkey:
-        x = x + self.token(sequence)
+        # x = x + self.token(sequence)
+        x = self.token(sequence)
         if segment_label is not None:
             x = x + self.segment(segment_label)
         if self.is_time:
