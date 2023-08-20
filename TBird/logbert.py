@@ -14,6 +14,9 @@ from bert_pytorch.dataset import WordVocab
 from bert_pytorch import Predictor, Trainer
 from logdeep.tools.utils import *
 
+import warnings
+warnings.filterwarnings('ignore')
+
 options = dict()
 options['device'] = 'cuda' if torch.cuda.is_available() else 'cpu'
 options["output_dir"] = "../output/tbird/"
@@ -29,7 +32,14 @@ options["seq_len"] = 512
 options["max_len"] = 512 # for position embedding
 options["min_len"] = 10
 
-options["mask_ratio"] = 0.5
+# TODO mask_ratio_tbird
+options["mask_ratio"] = 0.5  # original
+# options["mask_ratio"] = 0.1
+# options["mask_ratio"] = 0.3
+# options["mask_ratio"] = 0.5
+# options["mask_ratio"] = 0.7
+# options["mask_ratio"] = 0.9
+
 
 options["vocab_size"] = 844
 
