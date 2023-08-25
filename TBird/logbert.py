@@ -14,6 +14,9 @@ from bert_pytorch.dataset import WordVocab
 from bert_pytorch import Predictor, Trainer
 from logdeep.tools.utils import *
 
+import warnings
+warnings.filterwarnings('ignore')
+
 options = dict()
 options['device'] = 'cuda' if torch.cuda.is_available() else 'cpu'
 options["output_dir"] = "../output/tbird/"
@@ -54,7 +57,9 @@ options["layers"] = 4
 options["attn_heads"] = 4
 
 options["epochs"] = 200
-options["n_epochs_stop"] = 10
+# TODO n_epochs_stop
+options["n_epochs_stop"] = 10  # original
+# options["n_epochs_stop"] = 20
 options["batch_size"] = 32
 
 options["corpus_lines"] = None
