@@ -64,7 +64,9 @@ options["layers"] = 4
 options["attn_heads"] = 4
 
 options["epochs"] = 200
-options["n_epochs_stop"] = 10
+# TODO n_epochs_stop
+# options["n_epochs_stop"] = 10
+options["n_epochs_stop"] = 20
 options["batch_size"] = 32
 
 options["corpus_lines"] = None
