@@ -53,13 +53,18 @@ options["scale_path"] = options["model_dir"] + "scale.pkl"
 
 # model
 options["hidden"] = 256 # embedding size
-options["layers"] = 4
+# TODO num_layers_tbird
+options["layers"] = 4  # original
+# options["layers"] = 3
+# options["layers"] = 6
 options["attn_heads"] = 4
 
-options["epochs"] = 200
+# TODO epochs
+# options["epochs"] = 200  # original
+options["epochs"] = 300
 # TODO n_epochs_stop
-options["n_epochs_stop"] = 10  # original
-# options["n_epochs_stop"] = 20
+# options["n_epochs_stop"] = 10  # original
+options["n_epochs_stop"] = 20
 options["batch_size"] = 32
 
 options["corpus_lines"] = None
