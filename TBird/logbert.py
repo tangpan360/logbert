@@ -14,6 +14,9 @@ from bert_pytorch.dataset import WordVocab
 from bert_pytorch import Predictor, Trainer
 from logdeep.tools.utils import *
 
+import warnings
+warnings.filterwarnings('ignore')
+
 options = dict()
 options['device'] = 'cuda' if torch.cuda.is_available() else 'cpu'
 options["output_dir"] = "../output/tbird/"
@@ -50,11 +53,18 @@ options["scale_path"] = options["model_dir"] + "scale.pkl"
 
 # model
 options["hidden"] = 256 # embedding size
-options["layers"] = 4
+# TODO num_layers_tbird
+options["layers"] = 4  # original
+# options["layers"] = 3
+# options["layers"] = 6
 options["attn_heads"] = 4
 
-options["epochs"] = 200
-options["n_epochs_stop"] = 10
+# TODO epochs
+# options["epochs"] = 200
+options["epochs"] = 300
+# TODO n_epochs_stop
+# options["n_epochs_stop"] = 10
+options["n_epochs_stop"] = 20
 options["batch_size"] = 32
 
 options["corpus_lines"] = None
