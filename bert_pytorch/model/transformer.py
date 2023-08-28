@@ -21,9 +21,9 @@ class TransformerBlock(nn.Module):
 
         super().__init__()
         # TODO 多分支
-        # self.attention = MultiBranch(h=attn_heads, d_model=hidden)
+        self.attention = MultiBranch(h=attn_heads, d_model=hidden)
         # self.attention = MultiBranch(h=4, d_model=128)
-        self.attention = MultiHeadedAttention(h=attn_heads, d_model=hidden)  # original
+        # self.attention = MultiHeadedAttention(h=attn_heads, d_model=hidden)  # original
         self.feed_forward = PositionwiseFeedForward(d_model=hidden, d_ff=feed_forward_hidden, dropout=dropout)
         self.input_sublayer = SublayerConnection(size=hidden, dropout=dropout)
         self.output_sublayer = SublayerConnection(size=hidden, dropout=dropout)
