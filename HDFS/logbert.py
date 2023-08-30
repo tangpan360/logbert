@@ -32,13 +32,13 @@ options["max_len"] = 512 # for position embedding
 options["min_len"] = 10
 
 # TODO mask_ratio_hdfs
-options["mask_ratio"] = 0.65  # original
+# options["mask_ratio"] = 0.65  # original
 # options["mask_ratio"] = 0.1
 # options["mask_ratio"] = 0.2
 # options["mask_ratio"] = 0.3
 # options["mask_ratio"] = 0.5
 # options["mask_ratio"] = 0.7
-# options["mask_ratio"] = 0.9
+options["mask_ratio"] = 0.9
 # options["mask_ratio"] = 0.6
 # options["mask_ratio"] = 0.4
 # options["mask_ratio"] = 0.45
@@ -70,8 +70,12 @@ options["layers"] = 4  # original
 # options["layers"] = 6
 options["attn_heads"] = 4
 
-options["epochs"] = 200
-options["n_epochs_stop"] = 10
+# TODO epochs
+# options["epochs"] = 200
+options["epochs"] = 300
+# TODO n_epochs_stop
+# options["n_epochs_stop"] = 10
+options["n_epochs_stop"] = 20
 options["batch_size"] = 32
 
 options["corpus_lines"] = None
