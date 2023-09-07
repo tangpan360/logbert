@@ -68,7 +68,9 @@ class Trainer():
                                      seq_len=self.seq_len,
                                      min_len=self.min_len
                                     )
-
+        # import joblib
+        # joblib.dump(logkey_train, '/home/iip/tp/logbert/output/tbird/logkey_train.joblib')
+        # joblib.dump(logkey_valid, '/home/iip/tp/logbert/output/tbird/logkey_valid.joblib')
         train_dataset = LogDataset(logkey_train,time_train, vocab, seq_len=self.seq_len,
                                     corpus_lines=self.corpus_lines, on_memory=self.on_memory, mask_ratio=self.mask_ratio)
 
@@ -170,7 +172,7 @@ class Trainer():
                 for i, data in data_iter:
                     data = {key: value.to(self.device) for key, value in data.items()}
 
-                    result = self.trainer.model.forward(data["bert_input"], data["time_input"])
+                    result = self.trainer.model.forward(data["bert_input"], data["time_input"], i, totol_length)
                     cls_output = result["cls_output"]
 
                     outputs += torch.sum(cls_output.detach().clone(), dim=0)

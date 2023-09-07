@@ -1,3 +1,5 @@
+import joblib
+import pickle
 import torch.nn as nn
 import torch
 
@@ -34,16 +36,29 @@ class BERT(nn.Module):
             [TransformerBlock(hidden, attn_heads, hidden * 2, dropout) for _ in range(n_layers)])
 
 
-    def forward(self, x, segment_info=None, time_info=None):
+    def forward(self, x, segment_info=None, time_info=None, i=None, totol_length=None):
         # attention masking for padded token
         # torch.ByteTensor([batch_size, 1, seq_len, seq_len)
+        global attns
         mask = (x > 0).unsqueeze(1).repeat(1, x.size(1), 1).unsqueeze(1)
 
         # embedding the indexed sequence to sequence of vectors
         x = self.embedding(x, segment_info, time_info)
 
-        # running over multiple transformer blocks
-        for transformer in self.transformer_blocks:
-            x = transformer.forward(x, mask)
+        if i != totol_length-1:
+        # if i != 0:
+            # running over multiple transformer blocks
+            for transformer in self.transformer_blocks:
+                x, attn = transformer.forward(x, mask)
+        else:
+            # running over multiple transformer blocks
+            attns = []
+            for transformer in self.transformer_blocks:
+                x, attn = transformer.forward(x, mask)
+                attns.append(attn)
+            attns_cpu = [attn.cpu() for attn in attns]
+            joblib.dump(attns_cpu, '../output/tbird/attns.pkl')
+            # with open('/home/iip/tp/logbert/output/tbird/attns.pkl', 'wb') as f:
+            #     pickle.dump(attns_cpu, f)
 
         return x

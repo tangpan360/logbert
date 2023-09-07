@@ -136,7 +136,7 @@ class BERTTrainer:
         for i, data in data_iter:
             data = {key: value.to(self.device) for key, value in data.items()}
 
-            result = self.model.forward(data["bert_input"], data["time_input"])
+            result = self.model.forward(data["bert_input"], data["time_input"], i=i, totol_length=totol_length)
             mask_lm_output, mask_time_output = result["logkey_output"], result["time_output"]
 
             # 2-2. NLLLoss of predicting masked token word ignore_index = 0 to ignore unmasked tokens

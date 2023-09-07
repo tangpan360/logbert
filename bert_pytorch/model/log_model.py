@@ -21,8 +21,8 @@ class BERTLog(nn.Module):
         #self.cls_lm = LogClassifier(self.bert.hidden)
         self.result = {"logkey_output": None, "time_output": None, "cls_output": None, "cls_fnn_output": None}
 
-    def forward(self, x, time_info):
-        x = self.bert(x, time_info=time_info)
+    def forward(self, x, time_info, i, totol_length):
+        x = self.bert(x, time_info=time_info, i=i, totol_length=totol_length)
 
         self.result["logkey_output"] = self.mask_lm(x)
         # self.result["time_output"] = self.time_lm(x)

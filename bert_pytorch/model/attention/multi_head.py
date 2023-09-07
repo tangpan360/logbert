@@ -34,4 +34,4 @@ class MultiHeadedAttention(nn.Module):
         # 3) "Concat" using a view and apply a final linear.
         x = x.transpose(1, 2).contiguous().view(batch_size, -1, self.h * self.d_k)
 
-        return self.output_linear(x)
+        return self.output_linear(x), attn
