@@ -33,10 +33,11 @@ class BERTEmbedding(nn.Module):
 
     def forward(self, sequence, segment_label=None, time_info=None):
         x = self.position(sequence)
+        x_original = self.token(sequence)
         # if self.is_logkey:
         x = x + self.token(sequence)
         if segment_label is not None:
             x = x + self.segment(segment_label)
         if self.is_time:
             x = x + self.time_embed(time_info)
-        return self.dropout(x)
+        return self.dropout(x), x_original

@@ -28,11 +28,11 @@ class TransformerBlock(nn.Module):
         self.norm = LayerNorm(hidden)
         self.dropout1 = nn.Dropout(dropout)
 
-    def forward(self, x, mask):
+    def forward(self, x, mask, x_original, x_position):
         x_tem = self.norm(x)
-        x_tem, attn = self.attention.forward(x_tem, x_tem, x_tem, mask=mask)
+        x_tem, attn, attn_ww, attn_wp, attn_pw, attn_pp = self.attention.forward(x_tem, x_tem, x_tem, mask=mask, x_original=x_original, x_position=x_position)
         x_tem = self.dropout1(x_tem)
         x = x + x_tem
         # x = self.input_sublayer(x, lambda _x: self.attention.forward(_x, _x, _x, mask=mask))
         x = self.output_sublayer(x, self.feed_forward)
-        return self.dropout(x), attn
+        return self.dropout(x), attn, attn_ww, attn_wp, attn_pw, attn_pp
